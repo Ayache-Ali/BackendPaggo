@@ -9,13 +9,9 @@ export class UploadService {
   constructor(private prisma: PrismaService) {}
 
   private async extractTextFromImage(fileBuffer: Buffer): Promise<string> {
-    const worker = await createWorker();
-
-  // 🔹 Set worker path and core path manually
-    await worker.setParameters({
-    "tessedit_create_pdf": "1",
-    "tesseract_lang_path": "/public/tesseract/",
-    "tesseract_core_path": "/public/tesseract/tesseract-core-simd.wasm",
+    const worker = await createWorker({
+      workerPath: "/public/tesseract/worker.min.js",
+      corePath: "/public/tesseract/tesseract-core-simd.wasm",
     });
     await worker.load("por")
 
