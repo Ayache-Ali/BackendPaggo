@@ -1,21 +1,26 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { createWorker } from 'tesseract.js';
+import axios from 'axios';
 import OpenAI from "openai";
-
 
 @Injectable()
 export class UploadService {
   constructor(private prisma: PrismaService) {}
 
   private async extractTextFromImage(fileBuffer: Buffer): Promise<string> {
-    const worker = await createWorker(); 
-    await worker.load("por")
+    const apiKey = 'SUA_API_KEY_DO_OCR_SPACE'; // Coloque a chave da API OCR.space aqui
+    const formData = new FormData();
+    formData.append('base64Image', fileBuffer.toString('base64')); // Converte o buffer para base64
 
-    const { data } = await worker.recognize(fileBuffer);
-    await worker.terminate(); 
+    const response = await axios.post('https://api.ocr.space/parse/image', formData, {
+      headers: {
+        'apikey': apiKey,
+        'Content-Type': 'multipart/form-data',
+      }
+    });
 
-    return data.text || "";
+    const parsedText = response.data.ParsedResults[0]?.ParsedText || '';
+    return parsedText;
   }
 
   async getChatExplanation(id: string, apiKey: string): Promise<string> {
@@ -37,9 +42,10 @@ export class UploadService {
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
-      messages: [{ role: "user", content: `Explique este texto: ${file.text}` }],
+      messages: [{ role: "user", content: `Explique este texto: ${file.text}` }], 
       max_tokens: 200,
     });
+
     const explanation = response.choices[0].message?.content?.trim() || '';
 
     await this.prisma.document.update({
@@ -48,11 +54,9 @@ export class UploadService {
     });
 
     return explanation;
-
   }
 
   async saveFile(userId: string, filename: string, fileBuffer: Buffer) {
-
     const extractedText = await this.extractTextFromImage(fileBuffer);
 
     return this.prisma.document.create({
@@ -84,6 +88,4 @@ export class UploadService {
       },
     });
   }
-
-  
 }
