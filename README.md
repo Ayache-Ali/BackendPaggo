@@ -47,12 +47,8 @@ $ npm run start:prod
 
 ## Deployment
 
+By default, the backend will run locally in http://localhost:5000 to be accessed by the frontend, available at: https://github.com/Ayache-Ali/FrontendPaggo
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
