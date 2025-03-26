@@ -26,9 +26,10 @@
 Backend project for Paggo Case.
 
 ## Project setup
-
+Run the following commands to download dependencies and config the Prisma database:
 ```bash
 $ npm install
+$ npx prisma generate
 ```
 
 ## Compile and run the project
