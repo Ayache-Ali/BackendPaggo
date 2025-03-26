@@ -8,7 +8,7 @@ export class UploadService {
   constructor(private prisma: PrismaService) {}
 
   private async extractTextFromImage(fileBuffer: Buffer): Promise<string> {
-    const apiKey = 'SUA_API_KEY_DO_OCR_SPACE'; // Coloque a chave da API OCR.space aqui
+    const apiKey = 'K82981710988957'; // Coloque a chave da API OCR.space aqui
     const formData = new FormData();
     formData.append('base64Image', fileBuffer.toString('base64')); // Converte o buffer para base64
 
