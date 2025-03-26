@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "postinstall": "npx prisma generate && npm install tesseract.js",
+    "postinstall": "npx prisma generate && mkdir -p public/tesseract && cp node_modules/tesseract.js-core/tesseract-core-simd.wasm public/tesseract/ && cp node_modules/tesseract.js/dist/worker.min.js public/tesseract/",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",

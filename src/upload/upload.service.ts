@@ -10,8 +10,8 @@ export class UploadService {
 
   private async extractTextFromImage(fileBuffer: Buffer): Promise<string> {
     const worker = await createWorker({
-      workerPath: "/var/task/public/tesseract/worker.min.js",
-      corePath: "/var/task/public/tesseract/tesseract-core-simd.wasm",
+      workerPath: "/public/tesseract/worker.min.js",
+      corePath: "/public/tesseract/tesseract-core-simd.wasm",
     });
     await worker.load("por")
 
