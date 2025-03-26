@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "postinstall": "npx prisma generate",
+    "postinstall": "npx prisma generate && mkdir -p public/tesseract && cp node_modules/tesseract.js-core/tesseract-core-simd.wasm public/tesseract/",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
