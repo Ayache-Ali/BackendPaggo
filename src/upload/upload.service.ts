@@ -9,10 +9,7 @@ export class UploadService {
   constructor(private prisma: PrismaService) {}
 
   private async extractTextFromImage(fileBuffer: Buffer): Promise<string> {
-    const worker = await createWorker({
-      workerPath: "/var/task/public/tesseract/worker.min.js",
-      corePath: "/var/task/public/tesseract/tesseract-core-simd.wasm",
-    });
+    const worker = await createWorker(); 
     await worker.load("por")
 
     const { data } = await worker.recognize(fileBuffer);
